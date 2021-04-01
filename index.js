@@ -34,19 +34,15 @@ client.connect((err) => {
   })
 
   app.post("/addProduct", (req, res) => {
-    // console.log(req.body);
     const product = req.body
     productsCollection.insertOne(product)
     .then( res => {
-        // console.log('added successfully')
     })
   });
 
   app.delete('/deleteProduct/:id', (req,res) => {
-    // console.log(req.params.id)
     productsCollection.findOneAndDelete({_id : ObjectId(req.params.id)})
     .then( result => {
-        // console.log(result)
         productsCollection.find().sort({_id : -1})
       .toArray((error, document) =>{
           res.send(document)
@@ -58,7 +54,6 @@ client.connect((err) => {
   })
 
   app.get('/getSelectedProduct', (req,res) => {
-      // console.log(req.query.id)
       productsCollection.find({_id : ObjectId(req.query.id)})
       .toArray((error, result) =>{
           res.send(result)
@@ -66,7 +61,6 @@ client.connect((err) => {
   })
 
   app.post('/addOrder' , (req,res) => {
-    // console.log(req.body)
     const order = req.body
     ordersCollection.insertOne(order)
     .then( result => {
@@ -77,7 +71,6 @@ client.connect((err) => {
   })
 
   app.get('/getOrders', (req,res) =>{
-    // console.log(req.query.email)
     ordersCollection.find({email: req.query.email})
     .toArray((error, document) => {
       res.send(document)
@@ -85,7 +78,7 @@ client.connect((err) => {
   })
 
 
-  // console.log("db connect success");
+
 });
 
 app.listen(port, () => console.log("Server is Running"));
